@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>المحققة التاريخية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#1c2427;--desk2:#26333a;--paper:#f1e6cc;--paper2:#e2d0a8;--ink:#2a2119;--muted:#6f604b;
+  --red:#b3261e;--green:#1f6f4f;--green2:#2b8a60;--gold:#c79a3a;--line:rgba(42,33,25,.13);--r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Tajawal,sans-serif;background:var(--desk);background-image:radial-gradient(circle at 15% -10%,#33454c 0,transparent 55%),radial-gradient(circle at 100% 110%,#203230 0,transparent 50%);background-attachment:fixed;color:var(--paper);min-height:100vh;line-height:1.75;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none}
+input,textarea,select{font-family:inherit;font-size:15px}
+h1,h2,h3,.kufi{font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;line-height:1.4}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+.screen{display:none}.screen.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .3s 2}
+.small{font-size:13px}.mt{margin-top:16px}.muted{color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.between{justify-content:space-between}
+
+/* paper + folders */
+.paper{background:var(--paper);color:var(--ink);border-radius:var(--r);padding:22px;position:relative;box-shadow:0 12px 30px rgba(0,0,0,.35);background-image:linear-gradient(transparent 31px,var(--line) 32px);background-size:100% 32px}
+.paper.plain{background-image:none}
+.folder{margin-top:24px;border-top-right-radius:0}
+.folder::before{content:attr(data-tab);position:absolute;top:-24px;right:0;background:var(--paper);color:var(--muted);font-size:13px;font-weight:800;padding:3px 20px 4px;border-radius:12px 12px 0 0}
+.stamp{position:absolute;top:18px;left:18px;border:3px double var(--red);color:var(--red);font-family:'Noto Kufi Arabic';font-weight:700;padding:1px 12px;border-radius:6px;transform:rotate(-9deg);opacity:.85;font-size:15px;pointer-events:none}
+.chip{display:inline-block;font-size:12px;font-weight:800;padding:1px 10px;border-radius:20px;background:rgba(42,33,25,.08);color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;line-height:1.3;background:var(--green);color:#fff;padding:13px 22px 9px;border-radius:10px;font-weight:800;font-size:15px;transition:.15s}
+.btn:hover{background:var(--green2)}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor;opacity:.85}
+.btn.ghost:hover{opacity:1;background:rgba(127,127,127,.08)}
+.btn.gold{background:var(--gold);color:var(--ink)}
+.btn.red{background:var(--red)}
+.btn.sm{padding:8px 15px 4px;font-size:13px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.inp{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid rgba(42,33,25,.25);background:#fbf6ea;color:var(--ink)}
+.inp:focus{outline:none;border-color:var(--green)}
+label.f{display:block;font-weight:800;font-size:14px;margin:12px 0 4px}
+label.f small{font-weight:500;color:var(--muted)}
+
+/* login */
+.login{max-width:520px;margin:6vh auto 0}
+.brand{text-align:center;margin-bottom:26px}
+.brand .lens{font-size:54px;display:block}
+.brand h1{font-size:34px;color:var(--paper)}
+.brand p{opacity:.75}
+.login .paper h2{font-size:22px;margin-bottom:6px}
+.tlink{display:block;margin:18px auto 0;font-size:14px;opacity:.7;text-decoration:underline}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.top .logo{font-family:'Noto Kufi Arabic';font-size:20px;font-weight:700}
+.top .logo span{opacity:.6;font-size:14px;font-family:Tajawal;font-weight:500}
+
+/* HQ */
+.hqTop{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+.idcard{display:flex;gap:16px;align-items:center}
+.avatar{width:74px;height:74px;border-radius:50%;background:var(--paper2);display:grid;place-items:center;font-size:36px;flex-shrink:0;border:3px solid var(--gold)}
+.idcard h2{font-size:22px}
+.bar{height:9px;background:rgba(42,33,25,.12);border-radius:9px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--green));border-radius:9px;transition:width .6s}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:rgba(241,230,204,.08);border:1px solid rgba(241,230,204,.15);border-radius:var(--r);padding:14px;text-align:center}
+.stat b{display:block;font-family:'Noto Kufi Arabic';font-size:28px;color:var(--gold)}
+.stat small{opacity:.75}
+.weekly{margin-top:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:linear-gradient(90deg,rgba(199,154,58,.22),rgba(199,154,58,.06));border:1px dashed var(--gold);border-radius:var(--r);padding:14px 18px}
+.weekly .pin{font-size:28px}
+.weekly .txt{flex:1;min-width:200px}
+.weekly b{font-family:'Noto Kufi Arabic';font-size:18px}
+.grid2{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;margin-top:16px}
+.mapbox h3,.badges h3{font-size:17px;margin-bottom:8px}
+.mapbox svg{width:100%;height:auto;display:block}
+.mapPin{cursor:pointer}
+.mapPin:hover circle.p{r:12}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted);margin-top:6px}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px}
+.badge{text-align:center;padding:10px 4px;border-radius:12px;background:rgba(42,33,25,.05)}
+.badge .i{font-size:32px;display:block}
+.badge small{font-weight:700;font-size:12px;display:block;line-height:1.4}
+.badge.off .i{filter:grayscale(1);opacity:.3}
+.badge.off small{opacity:.45}
+.sec{margin:30px 0 4px;font-size:22px}
+.cases{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px 16px}
+.case{display:flex;flex-direction:column;gap:6px;min-height:200px}
+.case h3{font-size:18px}
+.case .era{font-size:13px;color:var(--muted)}
+.case .foot{margin-top:auto;padding-top:10px}
+.case.locked{filter:saturate(.3);opacity:.7}
+.case .stamp.done{border-color:var(--green);color:var(--green)}
+.stars{color:var(--gold);letter-spacing:2px}
+
+/* case screen */
+.casebar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.casebar .ct{flex:1;min-width:180px}
+.casebar .ct small{display:block;opacity:.65;font-size:13px}
+.casebar .ct b{font-family:'Noto Kufi Arabic';font-size:20px}
+.pill{background:rgba(241,230,204,.1);border:1px solid rgba(241,230,204,.2);border-radius:20px;padding:4px 12px;font-weight:800;font-size:14px;white-space:nowrap}
+.pill.warn{background:var(--red);border-color:var(--red)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:22px}
+.st{text-align:center;font-size:13px;font-weight:700;opacity:.5;padding-top:6px;border-top:4px solid rgba(241,230,204,.2)}
+.st span{display:block;font-family:'Noto Kufi Arabic';font-size:15px}
+.st.act{opacity:1;border-color:var(--gold);color:var(--gold)}
+.st.done{opacity:.85;border-color:var(--green2)}
+.brief{font-size:17px;margin:10px 0 14px;max-width:760px}
+.mystery{background:rgba(179,38,30,.08);border-right:4px solid var(--red);padding:12px 16px;border-radius:8px;font-size:17px;margin-bottom:14px}
+.mission{padding-right:22px;margin-bottom:12px}
+.mission li{margin:2px 0}
+
+/* evidence */
+.evs{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:14px;margin-top:12px}
+.ev{perspective:900px;cursor:pointer}
+.ev .in{display:grid;transition:transform .55s;transform-style:preserve-3d}
+.ev .back,.ev .front{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:12px;padding:16px;min-height:200px}
+.ev .back{background:#8a6a3c;background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 8px,transparent 8px 16px);color:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;border:2px dashed rgba(241,230,204,.4)}
+.ev .back .tp{font-size:38px}
+.ev .back small{opacity:.8}
+.ev .front{transform:rotateY(180deg);background:#fbf5e6;border:1px solid rgba(42,33,25,.15);box-shadow:0 4px 10px rgba(0,0,0,.08)}
+.ev.open .in{transform:rotateY(180deg)}
+.ev.open{cursor:default}
+.evh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.evh span{font-size:30px}
+.ev .front b{display:block;font-size:16px;margin-bottom:4px}
+.ev .front p{font-size:14.5px;color:#4a3d2c}
+.mcols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.mcols>div{display:flex;flex-direction:column;gap:8px}
+.mi{background:#fbf5e6;border:1.5px solid rgba(42,33,25,.2);color:var(--ink);padding:10px 12px;border-radius:10px;font-weight:700;font-size:14.5px;text-align:right;transition:.15s}
+.mi:hover:not(:disabled){border-color:var(--gold)}
+.mi.sel{background:var(--gold);border-color:var(--gold)}
+.mi.ok{background:rgba(31,111,79,.12);border-color:var(--green);color:var(--green);cursor:default}
+.mi.bad{background:rgba(179,38,30,.12);border-color:var(--red)}
+
+/* puzzle */
+.subs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.subs span{font-size:13px;font-weight:800;padding:3px 12px;border-radius:20px;background:rgba(42,33,25,.07);color:var(--muted)}
+.subs span.act{background:var(--ink);color:var(--paper)}
+.subs span.done{background:rgba(31,111,79,.15);color:var(--green)}
+.subs span.done::before{content:'✓ '}
+.q{font-size:20px;margin:8px 0 14px}
+.opts{display:grid;gap:10px}
+.opt{background:#fbf5e6;border:1.5px solid rgba(42,33,25,.2);color:var(--ink);padding:13px 16px;border-radius:12px;text-align:right;font-weight:700;font-size:16px;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--gold);transform:translateX(-3px)}
+.opt.ok{background:var(--green);color:#fff;border-color:var(--green)}
+.opt.bad{background:rgba(179,38,30,.1);border-color:var(--red);color:var(--red);text-decoration:line-through}
+.hintBox{margin-top:12px;background:rgba(199,154,58,.18);border-radius:10px;padding:10px 14px;font-weight:700}
+.slots{display:grid;gap:8px;margin:12px 0}
+.slot{display:flex;align-items:center;gap:12px;min-height:52px;padding:8px 12px;border-radius:10px;border:2px dashed rgba(42,33,25,.25);color:var(--muted)}
+.slot .n{width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-family:'Noto Kufi Arabic';flex-shrink:0}
+.slot.fill{border-style:solid;background:#fbf5e6;color:var(--ink);font-weight:700;cursor:pointer}
+.slot.ok{border-color:var(--green);background:rgba(31,111,79,.1)}
+.slot.bad{border-color:var(--red);background:rgba(179,38,30,.1)}
+.slot .d{color:var(--green);font-family:'Noto Kufi Arabic';font-size:14px;white-space:nowrap}
+.pool{display:flex;flex-wrap:wrap;gap:8px}
+.tile{background:var(--ink);color:var(--paper);padding:9px 14px;border-radius:10px;font-weight:700;font-size:14.5px;text-align:right}
+.tile:hover{background:#3d3024}
+.tl-line{display:flex;align-items:center;gap:6px}
+
+/* certificate */
+.cert{max-width:720px;margin:0 auto;background:#fbf5e6;color:var(--ink);border-radius:8px;padding:12px;box-shadow:0 14px 40px rgba(0,0,0,.4);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cert .inner{border:3px double var(--gold);border-radius:4px;padding:30px 24px;text-align:center;position:relative}
+.cert .seal{width:110px;height:110px;margin:10px auto;border-radius:50%;display:grid;place-items:center;font-size:54px;background:radial-gradient(circle,#f6e7c0,#e2c47f);border:4px solid var(--gold);box-shadow:0 0 0 6px rgba(199,154,58,.2)}
+.cert h2{font-size:26px;color:var(--green)}
+.cert .nm{font-family:'Noto Kufi Arabic';font-size:32px;margin:6px 0;color:var(--ink);border-bottom:2px solid var(--gold);display:inline-block;padding:0 20px}
+.cert .meta{display:flex;justify-content:center;gap:10px 26px;flex-wrap:wrap;margin-top:14px;font-weight:700}
+.cert .meta b{color:var(--green)}
+.cert .stars{font-size:26px}
+.cert .stamp{top:auto;bottom:22px;left:22px}
+.summary{max-width:720px;margin:18px auto 0}
+.endbtns{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+/* modal + toast */
+.modal{position:fixed;inset:0;background:rgba(10,14,16,.7);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal.on{display:flex}
+.modal .box{background:var(--paper);color:var(--ink);border-radius:var(--r);width:min(760px,100%);max-height:88vh;overflow:auto;padding:22px;position:relative}
+.modal .x{position:absolute;top:12px;left:14px;font-size:22px;color:var(--muted)}
+.tabs{display:flex;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.tabs button{padding:6px 14px;border-radius:20px;font-weight:800;font-size:14px;background:rgba(42,33,25,.07)}
+.tabs button.on{background:var(--ink);color:var(--paper)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+th,td{padding:8px;border-bottom:1px solid rgba(42,33,25,.15);text-align:right}
+th{background:rgba(42,33,25,.06)}
+.revlist{display:grid;gap:10px;margin-top:10px}
+.revlist div{background:#fbf5e6;border-radius:10px;padding:10px 14px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--ink);color:var(--paper);padding:11px 22px;border-radius:30px;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.4);transition:.3s;z-index:60;max-width:calc(100% - 32px);text-align:center}
+.toast.on{transform:translateX(-50%) translateY(0)}
+footer{text-align:center;opacity:.5;font-size:13px;margin-top:40px}
+
+@media (max-width:760px){
+  .hqTop,.grid2{grid-template-columns:1fr}
+  .steps{gap:3px}.st{font-size:11px}
+  .brand h1{font-size:28px}
+  .stamp{font-size:12px;top:12px;left:12px}
+  .mcols{gap:8px}.mi{font-size:13.5px;padding:9px}
+}
+@media print{
+  body{background:#fff}
+  body *{visibility:hidden}
+  #certPrint,#certPrint *{visibility:visible}
+  #certPrint{position:absolute;top:0;left:0;right:0;box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<section class="screen on" id="login">
+  <div class="wrap login">
+    <div class="brand">
+      <span class="lens">🕵️‍♀️</span>
+      <h1>المحققة التاريخية</h1>
+      <p>ملفات سرية من تاريخ وطني… والحل بين يديكِ</p>
+    </div>
+    <div class="paper folder" data-tab="بطاقة دخول">
+      <div class="stamp">سري للغاية</div>
+      <h2>مرحبًا بكِ في مكتب التحقيقات</h2>
+      <p class="muted" style="margin-bottom:14px">اكتبي اسمك لتحصلي على بطاقة المحققة وتبدئي أول قضية.</p>
+      <input class="inp" id="nameIn" placeholder="اسم المحققة" maxlength="40" onkeydown="if(event.key==='Enter')login()">
+      <button class="btn mt" style="width:100%;justify-content:center" onclick="login()">ابدئي التحقيق 🔍</button>
+    </div>
+    <button class="tlink" onclick="teacher()">لوحة المعلمة</button>
+  </div>
+</section>
+
+<!-- ============ HQ ============ -->
+<section class="screen" id="hq">
+  <div class="wrap">
+    <div class="top">
+      <div class="logo">🕵️‍♀️ المحققة التاريخية <span>· مقر التحقيقات</span></div>
+      <div class="row"><button class="btn ghost sm" onclick="teacher()">لوحة المعلمة</button><button class="btn ghost sm" onclick="logout()">خروج</button></div>
+    </div>
+    <div id="hqBody"></div>
+    <footer>مبادرة «المحققة التاريخية» · تنمية مهارات البحث والتحليل والاستنتاج وتعزيز الهوية الوطنية</footer>
+  </div>
+</section>
+
+<!-- ============ CASE ============ -->
+<section class="screen" id="case">
+  <div class="wrap">
+    <div class="casebar" id="caseHead"></div>
+    <div class="steps" id="steps"></div>
+    <div id="caseBody"></div>
+  </div>
+</section>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="box"><button class="x" onclick="closeModal()">✕</button><div id="mBody"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= البيانات ================= */
+const BASE=[
+{
+ id:'c1',code:'القضية رقم ١',title:'لغز الدولة السعودية الأولى',era:'١١٣٩هـ / ١٧٢٧م',level:'مستوى سهل',
+ place:{x:237,y:165,px:206,py:146},badge:{icon:'🏰',name:'وسام الدرعية'},
+ brief:'وصلت إلى مكتب التحقيقات وثيقة قديمة بلا توقيع، تتحدث عن دولة قامت في قلب الجزيرة العربية قبل نحو ثلاثة قرون، وتركت أثرًا ما زلنا نحتفل به حتى اليوم.',
+ question:'متى قامت الدولة السعودية الأولى؟ ومن أسّسها؟ وأين كانت عاصمتها؟',
+ evidence:[
+  {type:'شخصية',icon:'👤',title:'الإمام محمد بن سعود',text:'تولّى الحكم في الدرعية عام ١١٣٩هـ (١٧٢٧م)، وأسّس الدولة السعودية الأولى.'},
+  {type:'خريطة',icon:'🗺️',title:'الدرعية',text:'تقع على ضفاف وادي حنيفة شمال غرب الرياض، وكانت عاصمة الدولة السعودية الأولى.'},
+  {type:'صورة',icon:'🏛️',title:'حي الطريف',text:'حيّ تاريخي في الدرعية مبني من الطين، سُجّل في قائمة التراث العالمي لليونسكو عام ٢٠١٠م.'},
+  {type:'تاريخ',icon:'📅',title:'٢٢ فبراير',text:'صدر أمر ملكي عام ٢٠٢٢م باعتماده «يوم التأسيس»، تذكيرًا ببداية الدولة السعودية الأولى عام ١٧٢٧م.'},
+  {type:'وثيقة',icon:'📜',title:'نهاية الدولة الأولى',text:'انتهت عام ١٢٣٣هـ (١٨١٨م) بعد حصار الدرعية من قوات الحملة العثمانية بقيادة إبراهيم باشا.'}
+ ],
+ match:[['الإمام محمد بن سعود','مؤسس الدولة الأولى'],['الدرعية','عاصمة الدولة'],['حي الطريف','موقع تراث عالمي'],['٢٢ فبراير','يوم التأسيس']],
+ quiz:[
+  {q:'في أي عام قامت الدولة السعودية الأولى؟',opts:['١١٣٩هـ / ١٧٢٧م','١٣١٩هـ / ١٩٠٢م','١٢٤٠هـ / ١٨٢٤م'],hint:'ارجعي إلى بطاقة «الشخصية».'},
+  {q:'على ضفاف أي وادٍ تقع الدرعية؟',opts:['وادي حنيفة','وادي الدواسر','وادي فاطمة'],hint:'الإجابة في بطاقة «الخريطة».'},
+  {q:'ما المناسبة التي نحتفل بها في ٢٢ فبراير؟',opts:['يوم التأسيس','اليوم الوطني','يوم العلم'],hint:'تذكّري بداية الدولة الأولى.'}
+ ],
+ timeline:[
+  ['١١٣٩هـ / ١٧٢٧م','تولّي الإمام محمد بن سعود الحكم وتأسيس الدولة'],
+  ['١٢٣٣هـ / ١٨١٨م','سقوط الدرعية ونهاية الدولة الأولى'],
+  ['٢٠١٠م','تسجيل حي الطريف في قائمة التراث العالمي'],
+  ['٢٠٢٢م','اعتماد ٢٢ فبراير يومًا للتأسيس']
+ ],
+ conclusion:['قامت الدولة السعودية الأولى عام ١٧٢٧م بقيادة الإمام محمد بن سعود، وكانت عاصمتها الدرعية.','قامت الدولة السعودية الأولى عام ١٩٣٢م، وكانت عاصمتها جدة.','أسّس الملك عبدالعزيز الدولة السعودية الأولى، وكانت عاصمتها الرياض.'],
+ summary:'قامت الدولة السعودية الأولى عام ١١٣٩هـ (١٧٢٧م) على يد الإمام محمد بن سعود، واتخذت الدرعية عاصمة لها، واستمرت حتى عام ١٢٣٣هـ (١٨١٨م). ونحتفل في ٢٢ فبراير من كل عام بيوم التأسيس.'
+},
+{
+ id:'c2',code:'القضية رقم ٢',title:'عودة الدولة من جديد',era:'١٢٤٠هـ / ١٨٢٤م',level:'مستوى سهل',
+ place:{x:240,y:166,px:268,py:150},badge:{icon:'🛡️',name:'وسام العودة'},
+ brief:'بعد سقوط الدرعية ظنّ البعض أن القصة انتهت… لكن الأدلة في هذا الملف تقول غير ذلك. هناك من أعاد بناء الدولة بعد سنوات قليلة فقط.',
+ question:'من أعاد تأسيس الدولة السعودية؟ وإلى أين انتقلت العاصمة؟ وكم استمرت الدولة الثانية؟',
+ evidence:[
+  {type:'شخصية',icon:'👤',title:'الإمام تركي بن عبدالله',text:'أعاد تأسيس الدولة السعودية عام ١٢٤٠هـ (١٨٢٤م)، بعد سنوات قليلة من سقوط الدرعية.'},
+  {type:'خريطة',icon:'🗺️',title:'الرياض',text:'اتخذها الإمام تركي بن عبدالله عاصمةً للدولة السعودية الثانية بدلًا من الدرعية.'},
+  {type:'شخصية',icon:'👤',title:'الإمام فيصل بن تركي',text:'تولّى الحكم بعد والده عام ١٢٥٠هـ (١٨٣٤م)، ومن أبرز أئمة الدولة الثانية.'},
+  {type:'تاريخ',icon:'📅',title:'١٣٠٩هـ / ١٨٩١م',text:'نهاية الدولة السعودية الثانية، وغادر الإمام عبدالرحمن بن فيصل الرياض، واستقر لاحقًا مع أسرته في الكويت.'},
+  {type:'وثيقة',icon:'📜',title:'حساب المدة',text:'من ١٨٢٤م إلى ١٨٩١م… احسبيها بنفسك لتعرفي كم عامًا استمرت الدولة الثانية.'}
+ ],
+ match:[['الإمام تركي بن عبدالله','مؤسس الدولة الثانية'],['الرياض','العاصمة الجديدة'],['الإمام فيصل بن تركي','ابن المؤسس وخليفته'],['الإمام عبدالرحمن بن فيصل','استقر مع أسرته في الكويت']],
+ quiz:[
+  {q:'من أسّس الدولة السعودية الثانية؟',opts:['الإمام تركي بن عبدالله','الإمام محمد بن سعود','الإمام سعود بن عبدالعزيز'],hint:'ابحثي في بطاقات «الشخصية».'},
+  {q:'ما عاصمة الدولة السعودية الثانية؟',opts:['الرياض','الدرعية','الأحساء'],hint:'العاصمة انتقلت من الدرعية.'},
+  {q:'كم عامًا تقريبًا استمرت الدولة السعودية الثانية؟',opts:['٦٧ عامًا','٢٠ عامًا','١٥٠ عامًا'],hint:'اطرحي ١٨٢٤ من ١٨٩١.'}
+ ],
+ timeline:[
+  ['١٢٣٣هـ / ١٨١٨م','سقوط الدرعية ونهاية الدولة الأولى'],
+  ['١٢٤٠هـ / ١٨٢٤م','تأسيس الإمام تركي بن عبدالله للدولة الثانية'],
+  ['١٢٥٠هـ / ١٨٣٤م','تولّي الإمام فيصل بن تركي الحكم'],
+  ['١٣٠٩هـ / ١٨٩١م','نهاية الدولة السعودية الثانية']
+ ],
+ conclusion:['أعاد الإمام تركي بن عبدالله تأسيس الدولة عام ١٨٢٤م، واتخذ الرياض عاصمة لها.','أعاد الإمام تركي بن عبدالله تأسيس الدولة، وبقيت الدرعية عاصمتها.','لم تقم أي دولة سعودية بين عامي ١٨١٨م و١٩٠٢م.'],
+ summary:'أسّس الإمام تركي بن عبدالله الدولة السعودية الثانية عام ١٢٤٠هـ (١٨٢٤م) واتخذ الرياض عاصمة لها، واستمرت حتى عام ١٣٠٩هـ (١٨٩١م)، أي نحو ٦٧ عامًا.'
+},
+{
+ id:'c3',code:'القضية رقم ٣',title:'رسالة مشفّرة: فجرٌ في الرياض',era:'١٣١٩هـ – ١٣٥١هـ',level:'مستوى متوسط',
+ place:{x:240,y:167,px:236,py:198},badge:{icon:'⭐',name:'وسام التوحيد'},
+ brief:'وصلت إلى المكتب رسالة قصيرة مكتوبة بخط قديم: «فجرٌ في الرياض… ووحدةٌ بعد ثلاثين عامًا». فكّي رموزها واكتشفي القصة التي تخفيها.',
+ question:'كيف بدأت مرحلة توحيد المملكة؟ ومتى أُعلن قيام المملكة العربية السعودية؟',
+ evidence:[
+  {type:'شخصية',icon:'👤',title:'الملك عبدالعزيز بن عبدالرحمن آل سعود',text:'المؤسس الذي وحّد البلاد وأسس المملكة العربية السعودية.'},
+  {type:'صورة',icon:'🏯',title:'قصر المصمك',text:'حصن من الطين في وسط الرياض، ارتبط اسمه باسترداد الرياض عام ١٣١٩هـ.'},
+  {type:'تاريخ',icon:'📅',title:'٥ شوال ١٣١٩هـ',text:'الموافق ١٥ يناير ١٩٠٢م: استرداد الرياض، وبداية مرحلة التوحيد.'},
+  {type:'وثيقة',icon:'📜',title:'٢١ جمادى الأولى ١٣٥١هـ',text:'صدر الأمر الملكي بتوحيد البلاد تحت اسم «المملكة العربية السعودية».'},
+  {type:'تاريخ',icon:'📅',title:'٢٣ سبتمبر ١٩٣٢م',text:'يوم إعلان توحيد المملكة، ونحتفل به كل عام يومًا وطنيًا.'}
+ ],
+ match:[['الملك عبدالعزيز','مؤسس المملكة'],['قصر المصمك','استرداد الرياض'],['١٩٠٢م','بداية مرحلة التوحيد'],['٢٣ سبتمبر','اليوم الوطني']],
+ quiz:[
+  {q:'في أي عام استُردّت الرياض؟',opts:['١٩٠٢م','١٩٣٢م','١٨٢٤م'],hint:'«فجرٌ في الرياض» هو بداية القصة.'},
+  {q:'ما الحصن المرتبط باسترداد الرياض؟',opts:['قصر المصمك','قلعة مارد','قلعة تاروت'],hint:'انظري إلى بطاقة «الصورة».'},
+  {q:'كم عامًا تقريبًا بين استرداد الرياض وإعلان التوحيد؟',opts:['٣٠ عامًا','١٠ أعوام','٥٠ عامًا'],hint:'الرسالة المشفّرة تحمل الجواب.'}
+ ],
+ timeline:[
+  ['١٣١٩هـ / ١٩٠٢م','استرداد الرياض'],
+  ['١٣٤٤هـ / ١٩٢٦م','مبايعة الملك عبدالعزيز ملكًا على الحجاز'],
+  ['١٣٥١هـ / ١٩٣٢م','إعلان توحيد المملكة العربية السعودية'],
+  ['١٣٧٣هـ / ١٩٥٣م','وفاة الملك عبدالعزيز رحمه الله']
+ ],
+ conclusion:['بدأ الملك عبدالعزيز مرحلة التوحيد باسترداد الرياض عام ١٩٠٢م، وأُعلن قيام المملكة العربية السعودية عام ١٩٣٢م.','أُعلن قيام المملكة عام ١٩٠٢م مباشرة بعد استرداد الرياض.','بدأت مرحلة التوحيد من جدة عام ١٩٣٢م.'],
+ summary:'استرد الملك عبدالعزيز الرياض في ٥ شوال ١٣١٩هـ (١٥ يناير ١٩٠٢م)، ثم وحّد البلاد خلال ثلاثين عامًا، حتى صدر الأمر الملكي في ٢١ جمادى الأولى ١٣٥١هـ (٢٣ سبتمبر ١٩٣٢م) بتسميتها «المملكة العربية السعودية».'
+},
+{
+ id:'c4',code:'القضية رقم ٤',title:'لغز البئر رقم ٧',era:'١٩٣٣م – ١٩٣٩م',level:'مستوى متقدم',
+ place:{x:301,y:131,px:288,py:104},badge:{icon:'🛢️',name:'وسام بئر الخير'},
+ brief:'تقرير قديم من المنطقة الشرقية يذكر بئرًا خالفت توقعات الجميع بعد محاولات متعثرة كثيرة… وغيّرت مستقبل الوطن كله.',
+ question:'كيف بدأت قصة النفط في المملكة؟ وما البئر التي غيّرت كل شيء؟',
+ evidence:[
+  {type:'وثيقة',icon:'📜',title:'اتفاقية الامتياز ١٩٣٣م',text:'وقّعت الحكومة في جدة اتفاقية للتنقيب عن النفط مع شركة أمريكية.'},
+  {type:'خريطة',icon:'🗺️',title:'الدمام',text:'في المنطقة الشرقية، حيث حُفرت آبار الاختبار الأولى.'},
+  {type:'صورة',icon:'⛽',title:'بئر الدمام رقم ٧',text:'بعد آبار سابقة لم تنجح، بدأت تنتج النفط بكميات تجارية عام ١٩٣٨م، وسُمّيت «بئر الخير».'},
+  {type:'شخصية',icon:'👤',title:'ماكس ستاينكي',text:'الجيولوجي الذي أصرّ على مواصلة الحفر في البئر رقم ٧ رغم التعثر.'},
+  {type:'تاريخ',icon:'📅',title:'١٩٣٩م',text:'دشّن الملك عبدالعزيز تحميل أول شحنة نفط من ميناء رأس تنورة.'}
+ ],
+ match:[['بئر الدمام رقم ٧','بئر الخير'],['١٩٣٣م','اتفاقية الامتياز'],['رأس تنورة','أول شحنة نفط'],['ماكس ستاينكي','الجيولوجي المثابر']],
+ quiz:[
+  {q:'متى بدأت بئر الدمام رقم ٧ الإنتاج التجاري؟',opts:['١٩٣٨م','١٩٠٢م','١٩٧٠م'],hint:'ارجعي إلى بطاقة «الصورة».'},
+  {q:'ماذا سُمّيت بئر الدمام رقم ٧؟',opts:['بئر الخير','بئر الأمل','بئر النور'],hint:'اسم يدل على البركة.'},
+  {q:'من أي ميناء خرجت أول شحنة نفط؟',opts:['رأس تنورة','جدة','ينبع'],hint:'ميناء في المنطقة الشرقية.'}
+ ],
+ timeline:[
+  ['١٩٣٣م','توقيع اتفاقية الامتياز في جدة'],
+  ['١٩٣٨م','بئر الخير تبدأ الإنتاج التجاري'],
+  ['١٩٣٩م','تحميل أول شحنة نفط من رأس تنورة'],
+  ['١٩٨٠م','اكتمال ملكية المملكة لشركة أرامكو']
+ ],
+ conclusion:['بدأ إنتاج النفط تجاريًا في المملكة عام ١٩٣٨م من بئر الدمام رقم ٧ «بئر الخير».','اكتُشف النفط أول مرة في جدة عام ١٩٣٣م.','نجحت أول بئر حُفرت في الدمام مباشرة دون أي تعثر.'],
+ summary:'بعد توقيع اتفاقية الامتياز عام ١٩٣٣م، تعثرت الآبار الأولى في الدمام، حتى بدأت البئر رقم ٧ «بئر الخير» الإنتاج التجاري عام ١٩٣٨م، وفي عام ١٩٣٩م دشّن الملك عبدالعزيز أول شحنة نفط من رأس تنورة. والمثابرة كانت مفتاح القصة!'
+}
+];
+
+/* ================= أدوات ================= */
+const $=s=>document.querySelector(s);
+const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const EN=s=>String(s).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const TICON={'شخصية':'👤','تاريخ':'📅','خريطة':'🗺️','صورة':'📷','وثيقة':'📜'};
+const STEPS=['ملف القضية','جمع الأدلة','حل اللغز','بطاقة المحققة'];
+const RANKS=[[0,'محققة مبتدئة','🔍'],[1,'محققة ناشئة','🕵️‍♀️'],[2,'محققة متمرسة','🗂️'],[4,'كبيرة المحققات','🏅']];
+const KEY='history_detective_v1';
+let DB=load(),me=null,G=null,timerId=null;
+
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.settings)return d}catch(e){}
+  return{students:{},settings:{weekly:'c1',note:'مرتبطة بدرس: الدولة السعودية الأولى',minutes:10,pin:'1234'},custom:[],last:''}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}}
+const allCases=()=>[...BASE,...(DB.custom||[])];
+const student=()=>DB.students[me]||(DB.students[me]={solved:{}});
+const rankOf=n=>[...RANKS].reverse().find(r=>n>=r[0]);
+function unlocked(c,i,cs){return i===0||c.id===DB.settings.weekly||!!student().solved[cs[i-1].id]}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2600)}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));scrollTo(0,0)}
+function openModal(h){$('#mBody').innerHTML=h;$('#modal').classList.add('on')}
+function closeModal(){$('#modal').classList.remove('on')}
+function hijri(d){try{return new Date(d).toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'})}catch(e){return new Date(d).toLocaleDateString('ar')}}
+
+/* ================= الدخول ================= */
+if(DB.last)$('#nameIn').value=DB.last;
+function login(){const n=$('#nameIn').value.trim();if(n.length<2)return toast('اكتبي اسمك أولًا ✍️');
+  me=n;DB.last=n;student();save();renderHQ();show('hq')}
+function logout(){stopTimer();me=null;G=null;show('login')}
+
+/* ================= المقر ================= */
+function renderHQ(){
+  const cs=allCases(),st=student();
+  const done=cs.filter(c=>st.solved[c.id]);
+  const pts=done.reduce((s,c)=>s+st.solved[c.id].score,0);
+  const r=rankOf(done.length),nx=RANKS.find(x=>x[0]>done.length);
+  const w=cs.find(c=>c.id===DB.settings.weekly)||cs[0];
+  const pct=cs.length?Math.round(done.length/cs.length*100):0;
+  $('#hqBody').innerHTML=`
+  <div class="hqTop">
+    <div class="paper plain idcard">
+      <div class="avatar">${r[2]}</div>
+      <div style="flex:1">
+        <span class="chip">بطاقة المحققة</span>
+        <h2>${esc(me)}</h2>
+        <div><b>${r[1]}</b> <span class="muted small">${nx?`· باقي ${AR(nx[0]-done.length)} لتصبحي «${nx[1]}»`:'· أعلى رتبة 👑'}</span></div>
+        <div class="bar"><i style="width:${pct}%"></i></div>
+        <small class="muted">أنجزتِ ${AR(done.length)} من ${AR(cs.length)} قضايا</small>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>${AR(done.length)}</b><small>قضايا مكتملة</small></div>
+      <div class="stat"><b>${AR(pts)}</b><small>نقطة</small></div>
+      <div class="stat"><b>${AR(done.reduce((s,c)=>s+st.solved[c.id].stars,0))}</b><small>نجمة</small></div>
+    </div>
+  </div>
+  <div class="weekly">
+    <span class="pin">📌</span>
+    <div class="txt"><small>قضية الأسبوع</small><br><b>${esc(w.title)}</b><br><small style="opacity:.8">${esc(DB.settings.note||'')}</small></div>
+    <button class="btn gold" onclick="openCase('${w.id}')">${st.solved[w.id]?'أعيدي التحقيق':'ابدئي القضية'} ←</button>
+  </div>
+  <div class="grid2">
+    <div class="paper plain mapbox"><h3>🗺️ خريطة القضايا</h3>${mapSVG(cs,st)}
+      <div class="legend">${cs.filter(c=>c.place).map(c=>`<span>${st.solved[c.id]?'✅':'📍'} ${esc(c.code)}: ${esc(c.title)}</span>`).join('')}</div></div>
+    <div class="paper plain badges"><h3>🎖️ خزانة الأوسمة</h3>
+      <div class="bgrid">${cs.map(c=>`<div class="badge ${st.solved[c.id]?'':'off'}"><span class="i">${c.badge.icon}</span><small>${st.solved[c.id]?esc(c.badge.name):'وسام مخفي'}</small></div>`).join('')}</div></div>
+  </div>
+  <h2 class="sec">📂 ملفات القضايا</h2>
+  <div class="cases">${cs.map((c,i)=>caseCard(c,i,cs,st)).join('')}</div>`;
+}
+function caseCard(c,i,cs,st){
+  const s=st.solved[c.id],u=unlocked(c,i,cs);
+  return `<div class="paper folder case ${u?'':'locked'}" data-tab="${esc(c.code||'قضية')}">
+    ${s?`<div class="stamp done">تم الحل</div>`:c.id===DB.settings.weekly?`<div class="stamp">قضية الأسبوع</div>`:''}
+    <span class="chip" style="align-self:flex-start">${esc(c.level)}</span>
+    <h3>${esc(c.title)}</h3><div class="era">⏳ ${esc(c.era)}</div>
+    <div class="foot row between">
+      ${s?`<span class="stars">${'★'.repeat(s.stars)}${'☆'.repeat(3-s.stars)}</span><button class="btn sm ghost" onclick="openCase('${c.id}')">إعادة</button>`
+        :u?`<button class="btn sm" onclick="openCase('${c.id}')">افتحي الملف ←</button>`
+        :`<span class="muted small">🔒 أكملي القضية السابقة لفتحها</span>`}
+    </div></div>`;
+}
+const MAP_SA="M314.4 165.1L315.7 167.3L317.5 168.6L319.7 168.8L321.8 167.5L322.8 167.5L323.5 167.8L323.4 169.7L325.1 167.4L327.0 168.3L324.1 171.0L323.0 173.8L324.2 174.0L325.5 173.5L328.3 174.9L328.8 178.4L346.4 201.2L392.9 207.6L394.4 205.9L402.6 220.4L390.6 260.1L335.8 280.1L283.7 287.8L282.0 288.4L266.1 297.0L255.6 310.7L252.6 318.2L247.8 321.1L244.3 320.9L239.5 314.5L232.5 315.5L216.2 313.8L211.3 311.4L192.7 311.9L191.6 313.1L190.1 312.6L188.5 314.0L187.9 312.9L185.1 313.0L182.3 310.3L179.3 309.6L177.3 310.8L174.8 313.5L176.4 314.6L174.6 315.8L173.9 318.3L174.2 319.8L173.8 321.8L174.4 323.3L175.6 324.1L174.8 325.3L175.0 326.7L173.3 326.5L172.4 329.3L170.0 330.4L169.9 331.6L167.9 332.6L168.0 330.9L166.7 328.7L166.9 326.6L166.4 325.2L163.4 322.4L163.4 319.9L161.7 319.0L161.0 316.9L160.0 316.4L160.5 317.6L160.1 319.5L159.0 310.9L151.1 303.6L149.6 303.3L147.6 300.8L145.5 296.2L144.2 295.5L144.5 294.6L143.8 294.4L143.2 290.6L141.7 288.6L140.2 288.2L139.0 286.0L139.8 283.3L138.3 282.6L137.7 281.3L138.4 278.7L136.5 277.5L135.9 274.7L134.4 273.1L134.2 269.9L130.8 267.8L131.4 268.0L131.5 266.2L130.5 264.5L128.9 264.1L128.9 264.8L126.6 261.8L126.7 260.8L122.7 258.2L121.3 256.4L119.9 256.0L118.5 254.4L116.8 254.7L115.2 253.8L115.9 254.8L112.6 253.0L109.0 248.6L109.5 248.2L108.6 247.6L107.7 245.9L107.9 245.1L106.4 244.6L106.4 243.7L107.0 244.1L106.9 243.5L105.2 242.7L105.1 241.6L104.1 241.5L103.0 238.7L101.8 237.8L101.8 236.2L100.1 233.7L101.8 231.9L101.6 229.8L101.3 229.2L100.9 229.7L100.3 228.5L100.1 226.2L100.7 225.0L99.9 225.5L97.7 221.6L97.4 219.9L97.9 219.3L98.8 220.0L99.5 217.4L99.5 217.0L99.0 217.4L99.4 215.3L101.3 211.9L100.8 211.6L99.9 212.7L100.2 209.1L98.4 205.5L98.9 204.7L97.7 203.4L98.1 205.1L96.9 203.1L95.9 201.1L97.1 202.8L98.0 202.6L96.7 200.7L95.0 200.0L94.6 199.2L95.0 197.0L94.6 197.2L93.0 194.5L91.4 188.6L90.6 188.8L91.3 189.6L90.3 189.1L88.7 184.3L81.8 178.6L79.2 177.2L80.1 176.7L79.3 176.8L79.4 175.9L78.8 176.2L78.9 177.0L77.9 177.0L74.5 174.2L73.6 174.4L73.6 175.0L71.7 174.6L70.0 172.7L69.8 172.0L69.9 171.6L70.4 171.9L70.5 171.2L66.3 165.2L66.3 164.0L65.4 164.0L64.8 163.0L66.8 162.6L67.2 160.7L66.5 156.5L64.0 153.6L63.2 151.6L63.5 151.4L61.0 147.1L58.8 144.8L58.4 144.8L58.3 145.6L56.7 144.4L55.9 142.4L56.7 141.1L56.6 139.6L53.2 137.8L49.5 130.0L48.0 127.5L45.6 124.9L44.4 121.9L42.2 120.0L40.3 117.2L40.4 116.2L39.9 115.3L35.8 110.9L34.7 107.6L32.0 104.0L31.5 102.5L28.6 99.8L29.7 99.3L29.5 98.9L26.5 97.6L22.8 98.6L23.1 97.7L22.6 97.7L22.0 98.6L22.3 97.7L21.4 98.1L20.3 97.2L19.1 98.0L19.5 98.6L18.5 99.4L18.4 98.1L17.8 97.7L18.8 96.5L19.3 96.6L19.6 94.5L22.0 89.5L21.5 86.7L22.6 83.4L22.9 79.1L23.9 75.4L24.5 75.0L24.7 73.0L45.1 76.0L52.6 70.1L57.2 62.9L70.7 60.1L74.0 53.4L80.1 50.0L61.4 30.2L98.0 20.1L101.5 17.6L123.7 21.2L154.9 38.4L169.2 50.1L202.7 76.0L233.1 78.7L236.3 78.1L252.8 80.1L254.9 84.6L255.5 87.4L257.0 89.3L271.0 89.2L272.1 90.0L272.4 91.7L271.7 92.3L272.9 91.8L272.6 93.6L274.4 95.7L274.1 97.0L275.0 99.1L277.6 99.9L276.7 100.8L279.2 103.5L278.4 105.4L278.8 103.9L277.8 104.9L277.9 103.4L277.3 105.6L277.9 105.1L278.0 106.2L278.4 105.8L278.8 106.7L279.2 106.2L279.1 107.8L278.3 107.8L279.0 107.9L279.6 107.3L279.8 108.6L279.8 107.8L280.8 107.6L282.4 108.6L282.4 109.2L282.7 108.8L285.8 109.1L287.1 111.0L286.6 110.5L286.2 110.9L283.6 111.2L285.2 112.1L285.8 111.5L286.2 111.7L285.5 113.4L286.5 112.8L287.1 113.1L287.3 115.9L287.7 116.3L288.1 115.6L288.9 115.9L288.2 117.0L288.8 117.3L289.3 116.7L289.3 117.1L291.0 117.3L290.3 116.5L291.8 116.1L291.8 117.9L294.2 120.8L297.3 122.8L299.1 123.2L302.5 126.7L302.6 127.2L301.3 126.2L300.1 126.0L299.8 125.0L299.3 125.8L300.2 130.1L303.1 131.9L303.6 133.5L303.5 136.2L302.5 136.7L302.2 139.3L300.2 136.0L299.2 137.2L299.8 138.5L299.5 140.0L300.0 139.9L300.1 139.3L301.5 140.2L302.0 141.2L301.8 142.6L304.3 147.4L302.6 145.4L302.4 146.0L303.2 146.3L306.0 150.4L306.5 150.8L306.6 149.7L307.1 150.7L308.3 151.3L309.2 153.7L309.9 158.9L310.7 159.1L312.9 162.4L313.5 165.3ZM156.9 325.9L156.7 328.3L154.8 327.3L155.6 326.8L155.0 326.1L152.7 326.6L149.4 323.7L149.0 322.1L150.3 322.8L151.7 325.0L154.1 325.7L154.7 325.4L153.9 324.9L154.6 323.7ZM152.0 324.2L150.5 322.2L152.2 320.9L152.0 320.4L150.7 320.1L150.9 319.7L152.3 320.5L152.4 322.3L153.2 322.9L152.2 323.2L153.4 324.1L153.5 324.8ZM61.1 151.6L60.3 152.8L58.0 150.1L60.6 151.5L60.4 152.1ZM56.3 148.6L56.0 149.0L53.5 148.1L53.0 146.7L53.8 145.9L53.6 147.1Z";
+const MAP_NB="M335.8 280.1L349.4 314.0L350.8 314.7L356.1 327.2L345.9 331.1L341.5 334.7L339.0 340.3L340.3 343.1L340.4 347.7L334.6 349.7L333.8 351.0L330.3 351.9L330.3 353.2L324.6 355.4L309.8 359.0L302.9 363.1L298.6 363.2L288.2 367.0L284.7 369.7L283.1 369.6L281.4 373.5L275.8 379.1L266.5 380.6L265.7 379.4L263.4 378.9L256.6 382.5L252.1 386.9L243.2 389.3L239.4 391.4L230.8 391.3L220.5 393.2L215.7 398.6L210.4 400.8L209.4 404.8L207.9 404.4L208.9 403.9L208.6 402.8L205.9 403.9L206.8 404.6L206.1 405.4L204.4 404.6L203.3 405.2L202.7 403.9L201.2 403.6L197.6 406.6L189.0 408.0L182.7 404.9L180.3 406.3L180.4 403.1L175.9 394.3L176.9 385.6L173.5 378.3L171.0 369.7L172.1 371.2L172.3 369.2L169.6 362.3L170.8 363.8L170.6 361.0L169.3 357.3L166.9 355.8L165.1 356.2L164.6 355.1L165.9 355.1L166.5 352.7L166.3 353.8L168.0 355.8L168.2 353.1L166.1 346.0L168.7 341.7L167.9 332.6L172.4 329.3L173.3 326.5L175.0 326.7L175.6 324.1L173.8 321.8L173.9 318.3L174.6 315.8L176.3 315.0L174.8 313.5L177.3 310.8L180.9 309.7L185.1 313.0L187.9 312.9L188.5 314.0L190.1 312.6L191.6 313.1L192.7 311.9L211.3 311.4L216.2 313.8L232.5 315.5L239.5 314.5L244.3 320.9L247.8 321.1L252.6 318.2L255.6 310.7L266.1 297.0L282.0 288.4ZM381.3 409.1L382.6 409.0L380.9 410.3L377.2 411.3L375.3 413.0L367.8 414.0L364.9 413.3L360.1 409.1L361.6 408.8L361.7 406.9L363.9 405.7L366.4 405.9L369.9 408.0L370.5 407.1L374.9 406.0ZM410.7 138.8L413.1 134.7L413.1 135.8L416.7 135.7L414.9 135.6L415.0 134.2L415.9 134.4L415.2 133.8L415.9 132.3L417.7 133.4L418.4 132.8L418.6 133.5L416.6 134.6L418.2 135.3L417.2 135.6L418.0 137.1L416.4 136.0L415.3 136.5L415.4 137.8L415.9 137.1L415.9 137.9L417.9 138.0L416.2 139.2L417.6 141.1L416.3 141.5L414.4 147.5L413.0 147.6L411.9 146.6L412.6 139.7L412.2 138.5ZM416.3 160.4L420.4 170.1L426.4 177.7L430.3 180.9L439.3 184.2L442.1 184.4L443.8 185.6L448.2 185.7L451.6 187.6L456.5 187.1L457.9 188.8L459.7 189.2L465.7 199.0L468.3 201.1L469.5 204.1L473.5 208.8L475.5 208.4L477.6 210.0L477.7 209.2L479.2 209.8L478.9 215.3L470.4 231.1L465.1 234.5L458.2 243.4L458.0 244.6L459.1 244.7L456.6 247.1L455.3 251.7L454.0 252.8L449.5 251.9L450.6 248.2L449.6 247.7L447.5 248.7L447.2 250.4L445.0 252.0L445.2 253.4L443.2 254.8L442.4 260.5L440.1 265.4L442.4 280.2L440.5 281.1L431.3 281.8L424.0 285.1L421.0 288.8L419.5 297.0L415.8 301.2L409.8 301.1L399.1 303.2L395.2 309.2L396.5 311.7L395.8 315.3L391.5 319.8L387.2 321.0L383.5 319.2L374.3 319.8L372.4 321.8L368.2 322.6L365.7 324.8L360.6 325.3L356.1 327.2L350.8 314.7L349.4 314.0L335.8 280.1L390.6 260.1L402.6 220.4L394.4 205.9L395.1 197.6L400.8 184.6L400.7 182.5L399.3 180.7L402.8 179.5L405.7 179.9L409.2 178.4L408.0 175.6L404.8 175.4L405.7 173.2L404.9 168.8L405.9 167.1L405.4 162.9L406.2 161.6L408.1 160.4L409.4 160.9L409.8 162.8L408.5 162.6L411.1 165.4L414.9 162.1L415.3 160.5ZM462.4 247.5L463.2 249.8L461.2 251.3L460.2 254.4L457.7 256.6L457.7 252.6L460.1 250.7L462.1 246.1ZM414.4 147.5L416.0 149.5L416.3 160.4L415.3 160.5L414.9 162.1L411.1 165.4L408.6 162.9L408.9 162.3L409.8 162.8L408.9 160.6L407.4 160.6L405.6 162.3L405.9 167.1L404.9 168.8L405.8 172.2L404.8 175.4L408.0 175.6L409.2 178.4L405.7 179.9L402.8 179.5L399.3 180.7L400.7 182.5L400.8 184.6L395.1 197.6L394.4 205.9L393.2 207.5L346.4 201.2L328.5 178.0L328.8 172.3L329.5 175.5L330.2 174.4L330.7 175.6L331.8 174.2L332.2 174.8L332.7 180.0L334.9 180.7L342.4 179.8L347.2 175.8L348.6 177.2L354.6 176.7L357.1 177.6L357.5 176.6L359.1 178.0L362.6 177.6L365.2 179.1L370.5 178.7L380.5 174.2L381.6 171.1L383.2 171.1L380.4 169.3L381.6 168.6L382.5 170.0L383.4 169.8L385.0 166.7L384.5 165.0L392.5 159.7L396.2 154.8L397.0 156.0L396.5 154.3L399.6 151.7L401.1 148.4L401.0 149.4L402.4 149.3L404.9 146.4L408.5 143.5L408.4 144.6L410.7 138.8L412.2 138.5L412.6 139.7L411.9 146.6L413.0 147.6ZM366.5 176.8L366.2 176.3L370.0 174.5L372.1 176.5L370.6 177.2L369.8 176.5L368.6 177.4ZM314.4 165.1L315.3 164.1L313.5 156.3L313.4 150.1L314.2 149.4L315.1 150.7L314.9 148.4L314.0 147.9L315.3 147.0L316.1 149.4L317.5 147.1L316.1 147.2L315.9 146.4L316.1 144.2L317.4 144.0L317.6 140.4L322.5 136.8L324.3 137.9L325.0 140.7L327.3 141.1L328.5 142.4L328.8 144.8L327.9 145.3L328.7 145.8L327.1 146.3L328.0 147.4L326.9 147.6L326.5 149.6L327.4 154.1L329.0 154.9L329.1 159.6L324.1 168.6L324.3 167.3L323.0 166.7L320.6 168.5L317.5 168.6ZM262.2 60.1L263.0 63.4L266.3 69.2L262.5 68.5L257.7 72.7L260.1 72.2L259.7 73.2L260.5 73.5L262.8 72.1L264.9 73.0L266.0 79.7L268.2 82.1L269.1 84.8L270.3 85.1L269.5 87.2L270.2 86.9L271.0 89.2L257.0 89.3L255.5 87.4L252.8 80.1L236.3 78.1L242.2 71.1L247.5 59.9L251.4 58.2L257.1 58.0ZM269.5 65.8L267.3 68.0L266.1 67.4L263.9 64.0L265.2 63.2L264.8 62.1L266.0 62.4L266.7 61.5L265.3 60.4L266.5 60.3L269.4 64.2ZM204.0 -82.8L204.0 -81.6L206.2 -80.3L205.2 -75.8L208.2 -74.8L209.1 -73.4L208.1 -70.7L209.8 -68.3L212.7 -68.1L214.7 -61.8L214.1 -59.9L218.2 -59.9L222.0 -56.2L227.7 -57.1L229.5 -56.0L232.5 -56.1L230.9 -54.3L226.6 -53.5L225.9 -49.9L228.8 -46.4L228.4 -44.7L229.7 -44.3L229.3 -42.2L226.7 -41.2L225.0 -41.7L223.8 -38.1L222.1 -38.2L221.9 -36.8L220.5 -36.1L219.8 -34.4L221.1 -31.0L217.4 -31.8L217.5 -29.9L215.9 -28.9L216.7 -26.8L218.5 -26.2L218.2 -22.8L215.2 -19.5L217.2 -18.8L221.7 -11.7L224.5 -12.6L225.2 -11.0L223.9 -9.9L226.1 -9.8L229.4 -5.2L229.6 -3.4L227.1 -2.1L228.8 -1.2L228.3 0.9L231.6 0.8L235.3 2.2L246.5 10.5L249.7 10.3L252.3 12.1L252.2 13.5L254.1 15.7L253.8 17.0L260.1 23.9L257.2 31.8L257.1 40.1L263.3 40.2L263.3 50.7L265.5 51.1L266.8 53.5L268.7 53.7L270.6 56.0L270.1 57.1L271.4 60.0L273.3 61.1L270.6 61.2L265.3 59.1L262.5 59.9L261.9 57.9L262.2 60.1L257.1 58.0L251.4 58.2L248.4 59.3L246.8 60.8L244.1 67.6L239.6 74.6L236.3 78.1L233.1 78.7L202.7 76.0L154.9 38.4L124.7 21.6L101.3 17.6L104.0 15.1L103.0 12.9L99.2 13.4L98.3 10.5L99.7 10.1L94.5 -7.4L129.5 -26.6L134.6 -28.0L138.9 -35.9L138.9 -44.9L140.0 -49.9L141.8 -53.1L141.7 -56.5L139.5 -61.2L140.3 -67.1L142.2 -70.3L150.6 -72.4L160.4 -81.2L160.0 -82.2L163.7 -82.9L166.6 -87.1L168.0 -87.5L170.6 -86.4L173.8 -87.4L180.5 -84.9L186.5 -84.0L189.8 -86.3L191.6 -86.2L194.3 -84.7L194.6 -83.4L193.3 -81.8L195.2 -79.4L201.2 -83.6ZM36.8 6.4L39.6 5.0L41.9 5.7L43.9 6.9L45.1 9.7L47.1 9.5L50.9 12.4L58.6 13.7L94.5 -7.4L99.7 10.1L98.3 10.5L99.2 13.4L103.0 12.9L104.0 15.1L98.0 20.1L61.4 30.2L80.1 50.0L74.0 53.4L70.7 60.1L57.2 62.9L52.6 70.1L44.7 76.2L24.7 73.0L25.5 69.6L24.8 68.3L28.2 57.5L28.1 51.4L33.6 37.9L32.8 34.8L34.4 27.2L35.8 24.7L35.1 18.8L36.0 15.2L35.8 7.2ZM309.7 136.1L311.4 137.1L310.0 144.2L308.2 140.8L307.8 136.8L308.4 135.1L310.5 135.2L310.7 136.0ZM306.9 136.5L307.4 137.6L306.7 137.5ZM310.6 134.4L311.6 134.5L311.9 135.9ZM11.8 35.8L16.1 47.0L16.9 51.8L18.3 53.1L20.7 59.7L23.5 70.2L20.8 73.8L18.7 85.3L14.8 93.6L15.6 96.5L15.3 100.5L11.2 104.2L12.0 105.4L3.0 99.5L-0.6 94.1L-6.8 88.6L-7.7 80.2L-13.1 75.1L-14.3 71.7L-15.8 70.3L-16.2 70.9L-16.6 65.3L-18.2 63.5L-18.7 59.8L-18.8 61.1L-20.5 61.4L-19.9 62.7L-23.1 68.2L-18.6 72.6L-17.2 77.8L-17.8 80.5L-14.5 84.4L-13.4 88.4L-10.9 90.2L-6.4 97.1L-0.8 102.1L-0.1 104.2L-2.3 103.5L-0.8 104.8L-1.2 105.8L-0.1 107.1L-0.8 106.4L-1.9 107.1L0.6 110.1L1.7 113.2L4.4 115.1L4.3 117.6L7.2 122.1L6.2 126.9L7.6 127.8L13.5 140.0L17.3 145.5L28.5 168.5L28.2 170.0L32.7 174.3L34.6 177.8L34.8 177.2L36.6 179.6L39.1 180.3L40.1 182.0L35.0 180.5L34.6 181.0L34.5 190.1L36.9 197.2L29.5 204.3L36.9 197.2L38.3 201.4L39.5 202.6L39.4 201.6L41.1 204.7L48.0 207.3L49.6 210.2L51.7 211.5L51.9 212.9L60.2 218.7L60.0 220.1L-39.5 220.1L-38.5 216.5L-39.8 215.5L-43.0 220.1L-157.5 220.1L-157.5 76.4L-159.6 69.9L-160.6 62.2L-162.8 56.3L-158.8 50.0L-157.2 44.3L-159.3 39.2L-159.9 33.0L-156.7 30.1L-155.5 27.7L-154.4 26.9L-153.6 29.4L-149.8 29.9L-139.5 27.7L-114.7 32.4L-112.4 35.5L-108.5 36.4L-105.0 35.2L-103.7 38.0L-94.6 38.3L-87.5 40.9L-83.5 43.5L-80.0 43.2L-74.9 40.9L-64.5 33.3L-62.6 34.6L-62.8 35.7L-60.9 34.7L-60.5 35.2L-60.5 34.4L-62.5 34.4L-60.1 33.0L-59.5 30.0L-58.5 31.1L-59.2 29.8L-56.0 30.7L-48.0 28.3L-55.6 31.6L-55.5 32.2L-53.4 31.6L-52.4 32.2L-51.2 31.1L-47.9 31.3L-47.0 29.6L-45.3 30.1L-45.5 29.2L-47.9 28.3L-45.7 27.8L-37.3 31.1L-30.2 29.6L-28.8 32.0L-25.6 34.1L-29.3 32.1L-31.3 29.4L-32.1 30.0L-31.4 31.4L-32.4 31.1L-31.4 31.7L-32.3 31.8L-31.8 32.9L-32.9 32.8L-33.5 34.3L-31.3 35.5L-30.9 35.0L-30.6 36.3L-28.6 35.7L-28.9 37.4L-28.3 37.2L-28.4 38.3L-27.3 38.9L-27.4 38.1L-24.1 37.3L-24.1 34.7L-25.5 34.1L-23.2 34.6L-18.2 38.8L-12.3 36.9L-16.4 39.2L-12.3 37.8L-10.8 38.9L-9.8 37.3L-11.8 37.9L-9.0 36.1L-8.1 37.6L-8.8 37.9L-8.5 39.1L-5.4 38.4L-5.9 37.9L-3.9 37.7L-3.5 36.9L-0.1 37.7L4.6 36.7L11.0 33.7ZM11.8 35.8L13.7 34.2L14.0 32.1L17.5 29.2L16.1 28.3L20.3 21.0L22.6 14.4L24.6 3.7L26.7 2.8L27.4 -1.8L30.8 -2.0L31.9 -1.1L34.4 -1.7L35.6 -5.6L36.6 -4.8L40.6 -8.1L39.6 -5.5L41.8 1.1L39.4 5.1L35.8 7.2L35.8 12.3L33.0 11.7L32.2 9.8L29.1 9.2L26.4 11.3L24.9 16.0L25.3 20.7L26.3 21.8L25.2 23.3L27.0 22.9L29.0 23.8L29.6 22.4L30.4 25.0L29.9 25.8L27.9 25.3L25.1 27.4L23.4 32.7L28.6 32.8L34.0 30.2L32.8 34.8L33.6 37.9L28.1 51.4L28.2 57.5L24.7 69.1L23.8 70.2L22.9 69.1L20.7 59.7L18.3 53.1L16.9 51.8L16.1 47.0ZM204.8 -132.8L206.0 -132.5L207.5 -128.7L209.9 -127.0L211.1 -124.3L214.0 -124.0L216.3 -120.1L228.9 -117.3L233.5 -118.5L236.7 -117.8L242.4 -123.3L245.2 -123.8L246.7 -126.2L259.9 -133.6L262.6 -134.1L269.3 -127.6L265.0 -125.4L265.7 -123.6L268.1 -122.2L268.5 -120.1L264.2 -119.0L263.0 -117.0L267.2 -114.4L268.8 -112.0L270.7 -112.4L274.2 -107.9L279.1 -108.7L280.4 -98.1L281.6 -94.8L283.8 -92.5L289.4 -89.9L298.4 -89.5L303.2 -87.8L305.5 -83.1L318.0 -75.4L334.5 -71.7L372.8 -79.1L371.8 -78.0L365.6 -77.5L367.3 -76.3L373.0 -76.4L373.1 -80.6L371.2 -86.9L376.5 -86.5L382.5 -88.8L384.7 -88.8L387.1 -90.5L387.8 -94.7L393.4 -99.0L399.2 -101.7L403.9 -102.4L408.6 -101.3L414.7 -101.6L414.8 -103.6L417.2 -105.1L422.6 -105.4L428.2 -103.7L430.7 -105.6L433.8 -101.6L434.0 -99.4L448.7 -95.8L449.6 -93.6L452.3 -92.7L454.6 -92.9L455.5 -94.0L458.3 -92.9L460.4 -93.9L467.9 -90.3L469.8 -90.6L470.8 -86.4L472.5 -84.2L474.2 -84.0L475.1 -82.5L476.0 -83.0L482.7 -80.5L488.6 -72.7L503.7 -72.7L503.3 -67.1L504.7 -62.5L503.0 -59.4L505.0 -57.9L504.9 -53.4L505.9 -51.0L504.0 -46.0L502.6 -45.6L503.3 -42.0L501.8 -36.3L499.9 -34.5L499.7 -32.8L495.1 -30.3L498.6 -26.4L494.1 -26.1L491.4 -22.8L491.7 -12.8L494.3 -11.2L499.2 -10.3L497.6 -9.7L497.5 -8.3L492.7 -3.0L492.6 -1.2L497.5 15.0L496.5 19.5L497.4 30.1L513.2 32.5L514.2 33.6L515.7 39.7L515.3 43.1L497.8 62.8L506.8 72.5L506.7 74.5L509.5 78.4L511.0 82.6L516.9 89.1L525.5 91.6L529.4 95.4L532.8 95.1L532.3 100.1L533.8 110.1L532.5 114.7L535.2 115.7L540.4 114.8L543.0 117.7L541.4 118.7L542.0 122.2L540.5 123.4L540.2 127.1L532.7 127.1L526.5 128.8L524.2 130.0L523.7 132.8L521.2 132.5L520.6 133.7L515.8 135.5L514.4 143.6L512.7 144.6L512.0 154.3L511.4 156.0L510.8 154.9L510.8 156.0L509.4 156.1L510.2 156.5L508.1 158.8L501.2 155.8L493.9 154.5L492.4 151.1L489.6 152.4L490.9 154.2L487.6 152.5L486.0 152.6L486.2 153.6L483.9 152.7L480.6 153.4L478.2 152.2L473.9 152.0L472.4 150.8L464.9 152.0L460.9 148.8L453.5 147.8L448.9 149.1L447.1 148.7L445.1 146.1L441.6 147.3L441.3 145.1L433.2 144.3L430.6 138.3L431.4 136.7L429.0 131.7L429.2 127.6L428.0 123.0L426.2 120.9L427.1 119.9L425.1 119.8L425.4 118.4L424.0 117.2L415.7 116.0L411.5 116.8L408.2 119.5L403.2 120.1L401.1 122.0L401.6 122.8L400.5 124.3L395.9 124.1L387.2 130.1L384.1 129.8L383.0 128.3L379.8 127.9L378.4 125.7L373.0 125.0L367.5 125.8L363.4 122.9L362.6 120.5L355.0 117.9L347.2 112.9L346.8 112.1L348.4 111.0L344.6 107.3L340.7 106.4L336.4 103.3L330.4 103.4L325.7 100.8L325.2 101.4L322.8 97.2L323.1 95.2L319.4 89.3L319.0 85.3L317.5 83.7L315.7 83.4L314.3 81.3L314.7 80.1L316.1 81.0L316.6 78.9L315.0 77.2L311.4 77.1L312.2 74.2L311.6 71.0L302.3 61.2L301.0 56.1L298.1 55.9L291.1 59.5L290.1 56.9L285.9 56.9L285.4 54.7L284.3 55.5L279.9 52.4L282.5 51.8L285.1 53.1L286.2 51.0L285.2 49.9L284.4 50.5L284.4 49.8L281.0 49.7L280.4 50.4L282.1 51.3L280.2 51.6L278.9 53.1L280.2 55.8L279.8 59.2L274.9 58.9L275.1 60.3L274.3 60.9L271.6 60.2L270.1 57.2L270.4 55.6L268.5 53.6L266.8 53.5L265.7 51.2L263.3 50.7L263.3 40.2L257.1 40.1L257.2 31.8L260.1 23.9L253.8 17.0L254.1 15.7L252.2 13.5L252.3 12.1L249.7 10.3L246.5 10.5L235.3 2.2L231.6 0.8L228.3 0.9L228.8 -1.2L227.1 -2.1L229.6 -3.4L229.4 -5.2L226.1 -9.8L223.9 -9.9L225.2 -11.0L224.5 -12.6L221.7 -11.7L217.2 -18.8L215.2 -19.5L218.2 -22.8L218.5 -26.2L216.7 -26.8L215.9 -28.9L217.5 -29.9L217.4 -31.8L221.1 -31.0L219.8 -34.4L220.5 -36.1L221.9 -36.8L222.1 -38.2L223.8 -38.1L225.0 -41.7L226.7 -41.2L229.3 -42.2L229.7 -44.3L228.4 -44.7L228.8 -46.4L225.9 -49.9L226.6 -53.5L230.9 -54.3L232.5 -56.1L229.5 -56.0L227.7 -57.1L222.0 -56.2L218.2 -59.9L214.1 -59.9L214.7 -61.8L212.7 -68.1L209.6 -68.5L208.1 -70.7L208.9 -73.8L205.1 -76.2L206.2 -77.7L206.2 -80.3L203.8 -82.1L204.7 -85.9L200.5 -88.6L200.8 -91.7L199.9 -92.7L200.9 -94.3L199.3 -95.6L198.0 -95.4L196.7 -97.2L193.7 -97.9L198.4 -106.8L195.3 -107.6L195.4 -112.4L194.5 -113.2L195.0 -116.9L192.8 -119.3L193.4 -122.9L191.4 -124.0L190.3 -127.5L197.1 -128.3L198.4 -134.0L200.4 -135.3ZM413.1 119.9L414.5 120.9L412.8 121.5L408.3 126.1L407.0 125.1L396.3 129.0L396.2 126.8L397.4 127.1L405.1 124.1L404.8 120.9L407.4 121.9ZM173.9 405.8L169.4 407.5L167.8 409.7L168.0 411.4L165.9 412.8L162.2 409.7L160.4 410.7L156.9 405.3L152.5 402.5L148.2 395.0L138.7 387.7L132.2 377.9L125.7 375.1L122.0 371.9L118.8 370.7L115.0 371.5L113.2 370.1L110.6 370.1L108.1 368.6L106.9 369.9L102.5 371.2L101.0 368.0L98.8 367.0L98.3 368.7L96.2 370.1L88.2 371.7L84.6 366.4L80.5 365.5L78.4 362.4L72.2 377.9L67.5 370.9L64.3 371.6L63.2 374.5L57.5 373.4L53.5 374.7L51.6 357.3L55.3 351.1L56.1 345.5L61.3 334.4L59.9 329.7L62.1 323.2L61.6 318.7L64.6 319.7L67.8 318.9L69.5 319.4L71.2 316.5L71.2 313.8L75.3 312.3L76.7 310.5L78.5 311.1L81.1 309.0L81.8 310.4L82.6 309.1L84.7 309.5L88.8 302.2L91.4 299.9L98.9 316.7L101.4 325.7L104.0 341.4L106.6 343.8L107.4 346.8L106.8 347.3L107.5 347.3L106.5 347.9L107.0 349.5L108.7 349.2L109.8 350.0L111.8 354.7L111.7 358.1L113.5 358.4L114.3 356.5L112.8 352.2L114.7 349.9L118.4 353.2L117.4 355.3L119.8 360.4L122.2 361.7L124.1 359.9L124.3 360.7L125.2 359.9L126.1 360.8L126.3 359.7L128.4 362.2L129.6 362.1L130.9 366.1L133.1 365.7L138.3 367.3L147.6 381.2L149.8 381.3L152.9 383.1L155.4 387.1L157.6 388.9L156.9 386.7L158.7 388.5L160.4 395.5L162.2 396.1L163.2 395.3L166.8 399.3L167.7 403.0L168.7 402.7L170.4 404.2L171.8 402.0ZM124.0 347.2L124.1 348.6L116.5 347.9L115.8 346.0L118.4 346.8L117.1 345.3L115.7 345.2L115.7 344.2L116.8 344.6L116.5 343.7L117.6 343.2L116.0 342.1L118.6 343.0L118.7 344.3L119.4 343.9L119.9 347.1L121.2 347.5L121.7 346.7L120.9 346.3L121.8 345.9ZM-196.2 441.6L-194.5 435.0L-195.2 432.1L-197.8 431.9L-202.0 427.3L-200.8 418.5L-203.6 419.4L-203.1 416.7L-205.1 410.7L-203.8 407.8L-208.2 405.1L-210.0 407.0L-213.1 407.2L-215.4 404.1L-212.6 398.0L-209.4 396.1L-207.1 393.3L-210.6 384.4L-208.0 380.9L-202.0 377.2L-202.2 375.6L-204.1 374.7L-204.2 370.6L-205.3 369.1L-203.4 367.4L-199.6 366.2L-199.9 362.9L-194.4 356.0L-194.1 352.5L-195.4 349.2L-191.9 345.9L-187.8 346.4L-182.8 345.0L-176.4 346.2L-175.7 345.6L-175.7 260.1L-157.5 260.0L-157.5 220.1L-43.0 220.1L-39.8 215.5L-38.5 216.5L-39.5 220.1L-7.7 220.1L-0.7 225.8L7.3 224.7L8.8 220.1L60.0 220.1L59.2 220.7L60.1 227.0L64.2 234.4L67.8 238.8L67.4 239.7L66.4 239.6L65.6 238.1L67.1 238.7L64.3 235.5L63.7 239.2L66.3 248.7L65.3 253.0L66.2 257.6L65.6 259.7L67.0 264.3L66.6 268.5L70.1 282.8L72.0 285.7L74.4 285.2L75.7 285.8L76.0 287.4L79.0 288.3L82.6 291.7L81.8 293.0L83.2 295.0L84.9 295.1L86.0 293.9L84.4 295.6L87.3 296.2L87.5 295.5L91.4 299.7L88.8 302.2L84.7 309.5L82.6 309.1L81.8 310.4L81.1 309.0L78.5 311.1L76.7 310.5L75.3 312.3L71.2 313.8L71.2 316.5L69.5 319.4L67.8 318.9L64.6 319.7L61.6 318.7L62.1 323.2L59.9 329.7L61.3 334.4L56.1 345.5L55.3 351.1L51.6 357.3L53.5 374.7L51.7 380.6L52.2 383.6L51.0 388.0L48.1 392.8L46.4 399.4L46.1 405.6L38.1 406.8L31.4 419.5L29.5 422.1L26.9 423.6L26.9 429.0L24.6 434.9L25.3 436.3L24.0 440.9L24.8 441.9L22.6 445.4L21.1 446.3L21.0 445.1L17.8 442.3L15.0 444.4L12.4 448.7L13.3 455.5L9.1 466.4L8.6 470.9L5.5 470.9L5.1 470.0L6.8 462.9L5.8 456.5L-4.0 447.1L-8.4 445.2L-7.6 443.1L-9.4 428.0L-7.1 415.8L-15.9 415.7L-15.6 419.9L-27.7 420.0L-22.9 425.9L-22.9 433.8L-21.4 438.4L-30.3 446.9L-35.4 455.7L-44.5 464.7L-51.8 465.5L-56.9 460.6L-65.5 454.6L-72.8 458.8L-72.8 461.7L-75.2 464.8L-81.6 466.6L-85.6 469.4L-87.2 471.5L-86.9 473.5L-101.5 473.4L-104.2 468.1L-119.1 467.9L-127.4 470.4L-135.6 460.8L-140.6 456.4L-140.8 453.0L-142.0 451.6L-155.7 454.3L-157.6 460.7L-160.8 463.6L-160.9 469.6L-163.0 472.5L-165.2 482.3L-168.5 483.1L-173.3 486.4L-184.7 485.3L-183.3 480.5L-184.9 480.8L-185.7 479.6L-185.0 476.6L-182.1 474.4L-182.6 469.3L-181.4 466.2L-181.9 462.7L-188.4 451.2L-193.6 446.3ZM39.4 5.1L41.8 1.1L39.5 -6.7L42.4 -9.2L42.6 -10.6L44.5 -11.4L42.4 -12.8L42.9 -14.2L46.4 -17.0L50.4 -16.5L50.6 -17.2L48.8 -18.1L49.1 -18.9L51.0 -20.9L52.5 -21.1L54.9 -24.0L53.4 -28.5L49.7 -30.3L51.9 -32.6L49.5 -33.8L48.6 -32.5L43.3 -33.0L41.4 -38.5L41.8 -42.2L43.2 -44.0L42.4 -48.4L38.8 -51.6L40.9 -54.9L40.2 -57.0L43.5 -58.5L43.9 -57.4L46.7 -56.5L47.4 -59.0L50.4 -59.9L50.7 -64.6L56.0 -64.6L53.6 -69.6L55.5 -76.6L61.5 -75.1L63.1 -72.4L66.5 -73.2L70.3 -72.7L84.5 -78.2L89.2 -77.1L93.6 -73.9L103.0 -73.2L112.6 -74.8L129.9 -82.0L144.0 -81.5L153.6 -83.5L157.3 -86.5L159.8 -84.8L160.4 -81.2L150.6 -72.4L142.2 -70.3L140.3 -67.1L139.5 -61.2L141.7 -56.5L141.8 -53.1L140.0 -49.9L138.9 -44.9L138.9 -35.9L134.6 -28.0L129.5 -26.6L94.5 -7.4L58.8 13.7L50.9 12.4L47.1 9.5L45.1 9.7L42.8 6.2Z";
+function mapSVG(cs,st){
+  const city=(x,y,t,dx,anchor,dy=4)=>`<circle cx="${x}" cy="${y}" r="2.6" fill="#6f604b"/><text x="${x+dx}" y="${y+dy}" text-anchor="${anchor}" font-size="10.5" fill="#5a4c3a" font-family="Tajawal" font-weight="700">${t}</text>`;
+  const pins=cs.map((c,i)=>{if(!c.place)return'';const p=c.place,px=p.px??p.x,py=p.py??p.y,col=st.solved[c.id]?'#1f6f4f':unlocked(c,i,cs)?'#b3261e':'#8a7a62';
+    return `<g class="mapPin" onclick="openCase('${c.id}')"><line x1="${p.x}" y1="${p.y}" x2="${px}" y2="${py}" stroke="${col}" stroke-width="1.6" stroke-dasharray="3 2"/><circle cx="${p.x}" cy="${p.y}" r="3" fill="${col}"/><circle class="p" cx="${px}" cy="${py}" r="11" fill="${col}" stroke="#f1e6cc" stroke-width="2.5"/><text x="${px}" y="${py+4.5}" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff" font-family="Tajawal">${AR(i+1)}</text></g>`}).join('');
+  return `<svg viewBox="0 0 420 356" direction="ltr" style="direction:ltr" role="img" aria-label="خريطة المملكة العربية السعودية">
+    <rect width="420" height="356" rx="10" fill="#d6e2e2"/>
+    <path d="${MAP_NB}" fill="#ece6d6" stroke="#b9ae97" stroke-width="0.8" stroke-linejoin="round"/>
+    <path d="${MAP_SA}" fill="#e6d4a8" stroke="#6f604b" stroke-width="1.6" stroke-linejoin="round"/>
+    <text x="338" y="106" font-size="11" fill="#4f6b74" font-family="Tajawal" font-weight="800" text-anchor="middle" transform="rotate(-35 338 106)">الخليج العربي</text>
+    <text x="58" y="178" font-size="11" fill="#4f6b74" font-family="Tajawal" font-weight="800" text-anchor="middle" transform="rotate(52 58 178)">البحر الأحمر</text>
+    ${city(239.7,166.2,'الرياض',-7,'end',15)}${city(301.5,131.4,'الدمام',6,'start')}${city(101.8,229.2,'جدة',-6,'end')}${city(113.8,231.6,'مكة المكرمة',6,'start')}${city(109.8,170.6,'المدينة المنورة',6,'start')}${city(54.3,92.4,'تبوك',6,'start')}${city(162.6,295.6,'أبها',6,'start')}
+    ${pins}
+  </svg>`;
+}
+/* ================= القضية ================= */
+function openCase(id){
+  const cs=allCases(),i=cs.findIndex(x=>x.id===id),c=cs[i];
+  if(!c)return;
+  if(!unlocked(c,i,cs))return toast('🔒 هذه القضية مقفلة — أكملي القضية السابقة أولًا');
+  const m=Math.max(3,+DB.settings.minutes||10);
+  G={c,stage:1,opened:new Set(),mOrder:null,matched:[],sel:null,sub:'quiz',q:0,qo:null,qh:false,tl:null,pool:null,tlDone:false,co:null,mistakes:0,hints:0,left:m*60,timeUp:false};
+  show('case');startTimer();renderCase();
+}
+function leaveCase(){if(G&&G.stage<4&&!confirm('هل تريدين مغادرة القضية؟ سيضيع تقدمك فيها.'))return;stopTimer();G=null;renderHQ();show('hq')}
+function go(s){G.stage=s;renderCase();scrollTo({top:0,behavior:'smooth'})}
+function renderHead(){
+  const c=G.c;
+  $('#caseHead').innerHTML=`<button class="btn ghost sm" onclick="leaveCase()">→ المقر</button>
+    <div class="ct"><small>${esc(c.code||'')} · ${esc(c.level)}</small><b>${esc(c.title)}</b></div>
+    <div class="row">${G.stage<4?`<span class="pill" id="tmr"></span>`:''}<span class="pill">💡 ${AR(G.hints)}</span>${G.stage===3?`<button class="btn sm gold" onclick="reviewEv()">📂 راجعي الأدلة</button>`:''}</div>`;
+  $('#steps').innerHTML=STEPS.map((s,i)=>`<div class="st ${i+1<G.stage?'done':i+1===G.stage?'act':''}"><span>${i+1<G.stage?'✓':AR(i+1)}</span>${s}</div>`).join('');
+  tick();
+}
+function renderCase(){renderHead();$('#caseBody').innerHTML=[null,stBrief,stEvidence,stPuzzle,stCert][G.stage]()}
+function useHint(){G.hints++;renderHead()}
+function miss(){G.mistakes++}
+
+/* المؤقت */
+function startTimer(){stopTimer();timerId=setInterval(()=>{if(!G)return;if(G.left>0){G.left--;if(G.left===0){G.timeUp=true;toast('⏱ انتهى الوقت! أكملي القضية، لكن دون نقاط السرعة')}}tick()},1000)}
+function stopTimer(){clearInterval(timerId);timerId=null}
+function tick(){const e=$('#tmr');if(!e||!G)return;const m=Math.floor(G.left/60),s=G.left%60;
+  e.textContent=G.timeUp?'⏱ انتهى الوقت':`⏱ ${AR(m)}:${AR(String(s).padStart(2,'0'))}`;e.classList.toggle('warn',!G.timeUp&&G.left<60)}
+
+/* ١) ملف القضية */
+function stBrief(){const c=G.c;
+  return `<div class="paper folder" data-tab="ملف القضية"><div class="stamp">سري للغاية</div>
+    <span class="chip">⏳ ${esc(c.era)}</span>
+    <h2 style="font-size:26px;margin-top:6px">${esc(c.title)}</h2>
+    <p class="brief">${esc(c.brief)}</p>
+    <div class="mystery"><b>🔎 اللغز:</b> ${esc(c.question)}</div>
+    <b>مهمتكِ أيتها المحققة:</b>
+    <ol class="mission"><li>افتحي جميع الأدلة واقرئيها بعناية.</li><li>اربطي المعلومات ببعضها.</li><li>أجيبي عن الأسئلة، ورتّبي الأحداث زمنيًا، واختاري الاستنتاج الصحيح.</li></ol>
+    <p class="muted small">⏱ أنهي القضية خلال ${AR(Math.max(3,+DB.settings.minutes||10))} دقائق لتحصلي على نقاط السرعة. التلميحات متاحة دائمًا، لكن كل تلميح يخصم من نقاطك.</p>
+    <button class="btn mt" onclick="go(2)">افتحي ملف الأدلة ←</button></div>`}
+
+/* ٢) جمع الأدلة */
+function stEvidence(){const c=G.c,n=c.evidence.length,all=G.opened.size===n;
+  let h=`<div class="paper plain"><div class="row between"><h3>🗂️ الأدلة <span id="evCnt">(${AR(G.opened.size)}/${AR(n)})</span></h3><span class="muted small">اضغطي على كل بطاقة لفتحها</span></div>
+  <div class="evs">${c.evidence.map((e,i)=>`<div class="ev ${G.opened.has(i)?'open':''}" onclick="openEv(${i},this)"><div class="in">
+    <div class="back"><span class="tp">${TICON[e.type]||'📁'}</span><b>دليل رقم ${AR(i+1)}</b><small>${esc(e.type)}</small></div>
+    <div class="front"><div class="evh"><span>${e.icon||TICON[e.type]||'📁'}</span><small class="chip">${esc(e.type)}</small></div><b>${esc(e.title)}</b><p>${esc(e.text)}</p></div>
+  </div></div>`).join('')}</div></div>`;
+  if(all){
+    if(!G.mOrder)G.mOrder=shuffle(c.match.map((_,i)=>i));
+    const fin=G.matched.length===c.match.length;
+    h+=`<div class="paper plain mt" id="matchBox"><h3>🧵 اربطي الأدلة ببعضها</h3>
+    <p class="muted small">اختاري معلومة من العمود الأول، ثم ما يناسبها من العمود الثاني.</p>
+    <div class="mcols"><div>${c.match.map((m,i)=>`<button class="mi ${G.matched.includes(i)?'ok':''} ${G.sel===i?'sel':''}" onclick="pickA(${i})" ${G.matched.includes(i)?'disabled':''}>${esc(m[0])}</button>`).join('')}</div>
+    <div>${G.mOrder.map(i=>`<button class="mi ${G.matched.includes(i)?'ok':''}" id="mb${i}" onclick="pickB(${i})" ${G.matched.includes(i)?'disabled':''}>${esc(c.match[i][1])}</button>`).join('')}</div></div>
+    <div class="row mt">${fin?`<span style="color:var(--green);font-weight:800">✓ أحسنتِ! كل الخيوط متصلة.</span><button class="btn" onclick="go(3)">انتقلي إلى حل اللغز ←</button>`:`<button class="btn ghost sm" onclick="hintMatch()">💡 تلميح</button>`}</div></div>`;
+  }
+  return h;
+}
+function openEv(i,el){if(G.opened.has(i))return;G.opened.add(i);el.classList.add('open');
+  const n=G.c.evidence.length;$('#evCnt').textContent=`(${AR(G.opened.size)}/${AR(n)})`;
+  if(G.opened.size===n)setTimeout(()=>{renderCase();setTimeout(()=>$('#matchBox')?.scrollIntoView({behavior:'smooth',block:'start'}),50)},750)}
+function pickA(i){G.sel=G.sel===i?null:i;renderCase()}
+function pickB(i){if(G.sel===null)return toast('اختاري من العمود الأول أولًا');
+  if(i===G.sel){G.matched.push(i);G.sel=null;renderCase();if(G.matched.length===G.c.match.length)toast('🧵 ربطتِ جميع الأدلة!')}
+  else{miss();const b=$('#mb'+i);b.classList.add('bad','shake');setTimeout(()=>b.classList.remove('bad','shake'),700)}}
+function hintMatch(){const i=G.c.match.findIndex((_,k)=>!G.matched.includes(k));if(i<0)return;G.matched.push(i);G.sel=null;useHint();renderCase();toast('💡 ربطنا لكِ خيطًا واحدًا')}
+
+/* ٣) حل اللغز */
+function stPuzzle(){const c=G.c,ord=['quiz','tl','con'],cur=ord.indexOf(G.sub);
+  const prog=`<div class="subs">${['الأسئلة','الترتيب الزمني','الاستنتاج'].map((s,i)=>`<span class="${i<cur?'done':i===cur?'act':''}">${s}</span>`).join('')}</div>`;
+  if(G.sub==='quiz'){const q=c.quiz[G.q];if(!G.qo)G.qo=shuffle(q.opts.map((_,i)=>i));
+    return `<div class="paper plain">${prog}<span class="chip">سؤال ${AR(G.q+1)} من ${AR(c.quiz.length)}</span>
+      <h3 class="q">${esc(q.q)}</h3><div class="opts">${G.qo.map(i=>`<button class="opt" onclick="ansQ(${i},this)">${esc(q.opts[i])}</button>`).join('')}</div>
+      <div id="hintBox">${G.qh?`<div class="hintBox">💡 ${esc(q.hint||'استعيني بملف الأدلة')}</div>`:''}</div>
+      ${G.qh?'':`<button class="btn ghost sm mt" onclick="hintQ()">💡 تلميح</button>`}</div>`}
+  if(G.sub==='tl'){const n=c.timeline.length;if(!G.tl){G.tl=Array(n).fill(null);G.pool=shuffle(c.timeline.map((_,i)=>i))}
+    const left=G.pool.filter(i=>!G.tl.includes(i));
+    return `<div class="paper plain">${prog}<h3 class="q">🕰️ رتّبي الأحداث من الأقدم إلى الأحدث</h3>
+      <p class="muted small">اضغطي على الحدث لوضعه في الخانة التالية، واضغطي على أي خانة لإرجاعه.</p>
+      <div class="slots" id="slots">${G.tl.map((v,p)=>`<div class="slot ${v!=null?'fill':''} ${G.tlDone?'ok':''}" id="sl${p}" ${v!=null&&!G.tlDone?`onclick="unplace(${p})"`:''}><span class="n">${AR(p+1)}</span>${v!=null?`<span style="flex:1">${esc(c.timeline[v][1])}</span>${G.tlDone?`<span class="d">${esc(c.timeline[v][0])}</span>`:''}`:'<em>اختاري حدثًا</em>'}</div>`).join('')}</div>
+      ${G.tlDone?`<p style="color:var(--green);font-weight:800">✓ ترتيب صحيح! لاحظي التواريخ التي ظهرت.</p><button class="btn mt" onclick="G.sub='con';renderCase()">إلى الاستنتاج الأخير ←</button>`
+      :`<div class="pool">${left.map(i=>`<button class="tile" onclick="place(${i})">${esc(c.timeline[i][1])}</button>`).join('')}</div>
+      <div class="row mt"><button class="btn" onclick="checkTl()" ${G.tl.includes(null)?'disabled':''}>تحقّقي من الترتيب</button><button class="btn ghost sm" onclick="hintTl()">💡 تلميح</button></div>`}</div>`}
+  if(!G.co)G.co=shuffle(c.conclusion.map((_,i)=>i));
+  return `<div class="paper folder" data-tab="الاستنتاج النهائي">${prog}<h3 class="q">🧠 ما الاستنتاج الصحيح الذي يحل لغز القضية؟</h3>
+    <div class="mystery" style="font-size:15px">${esc(c.question)}</div>
+    <div class="opts">${G.co.map(i=>`<button class="opt" onclick="ansC(${i},this)">${esc(c.conclusion[i])}</button>`).join('')}</div></div>`;
+}
+function ansQ(i,el){if(i===0){el.classList.add('ok');document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+    setTimeout(()=>{G.qo=null;G.qh=false;if(G.q<G.c.quiz.length-1)G.q++;else G.sub='tl';renderCase()},750)}
+  else{miss();el.classList.add('bad','shake');el.disabled=true}}
+function hintQ(){G.qh=true;useHint();renderCase()}
+function place(i){const p=G.tl.indexOf(null);if(p<0)return;G.tl[p]=i;renderCase()}
+function unplace(p){G.tl[p]=null;renderCase()}
+function checkTl(){if(G.tl.includes(null))return;
+  if(G.tl.every((v,p)=>v===p)){G.tlDone=true;renderCase();return}
+  miss();G.tl.forEach((v,p)=>$('#sl'+p).classList.add(v===p?'ok':'bad'));
+  toast('بعض الأحداث في غير مكانها — الصحيحة بقيت في أماكنها');
+  setTimeout(()=>{G.tl=G.tl.map((v,p)=>v===p?v:null);renderCase()},1100)}
+function hintTl(){const p=G.tl.findIndex((v,k)=>v!==k);if(p<0)return;
+  const q=G.tl.indexOf(p);if(q>-1)G.tl[q]=null;G.tl[p]=p;useHint();renderCase();toast('💡 وضعنا لكِ حدثًا في مكانه الصحيح')}
+function ansC(i,el){if(i===0){el.classList.add('ok');document.querySelectorAll('.opt').forEach(b=>b.disabled=true);setTimeout(finish,900)}
+  else{miss();el.classList.add('bad','shake');el.disabled=true}}
+
+/* ٤) بطاقة المحققة */
+function finish(){stopTimer();
+  const sc=Math.max(30,100-G.mistakes*5-G.hints*10+(G.timeUp?0:20));
+  const stars=sc>=100?3:sc>=75?2:1,st=student(),prev=st.solved[G.c.id];
+  if(!prev||prev.score<sc)st.solved[G.c.id]={score:sc,stars,date:new Date().toISOString(),mistakes:G.mistakes,hints:G.hints};
+  save();G.result={sc,stars,first:!prev};G.stage=4;renderCase();scrollTo({top:0,behavior:'smooth'})}
+function stCert(){const c=G.c,r=G.result,cs=allCases(),idx=cs.findIndex(x=>x.id===c.id),nxt=cs[idx+1];
+  const done=cs.filter(x=>student().solved[x.id]).length,rank=rankOf(done);
+  return `<div class="cert" id="certPrint"><div class="inner">
+    <span class="chip">مكتب التحقيقات التاريخية</span>
+    <h2 style="margin-top:8px">بطاقة المحققة التاريخية</h2>
+    <p class="muted">نشهد بأن المحققة</p>
+    <div class="nm">${esc(me)}</div>
+    <p>نجحت في حل <b>«${esc(c.title)}»</b> بمهارة في البحث والتحليل والاستنتاج</p>
+    <div class="seal">${c.badge.icon}</div>
+    <b class="kufi" style="font-size:19px">${esc(c.badge.name)}</b>
+    <div class="stars">${'★'.repeat(r.stars)}${'☆'.repeat(3-r.stars)}</div>
+    <div class="meta"><span>النقاط: <b>${AR(r.sc)}</b></span><span>الرتبة: <b>${rank[1]}</b></span><span>التاريخ: <b>${hijri(new Date())}</b></span></div>
+    <div class="stamp done" style="border-color:var(--green);color:var(--green)">تم الحل</div>
+  </div></div>
+  <div class="paper plain summary"><h3>📝 ملخص القضية — احفظيه في ذاكرتك</h3><p style="margin-top:6px">${esc(c.summary||'')}</p>
+    <p class="muted small mt">${G.timeUp?'انتهى الوقت قبل الحل، لذا لم تُضف نقاط السرعة.':'✨ حصلتِ على ٢٠ نقطة سرعة لأنكِ أنهيتِ قبل انتهاء الوقت.'} · الأخطاء: ${AR(G.mistakes)} · التلميحات: ${AR(G.hints)}</p></div>
+  <div class="endbtns">
+    ${nxt?`<button class="btn gold" onclick="openCase('${nxt.id}')">القضية التالية: ${esc(nxt.title)} ←</button>`:''}
+    <button class="btn" onclick="window.print()">🖨️ طباعة الشهادة</button>
+    <button class="btn ghost" onclick="G=null;renderHQ();show('hq')">العودة إلى المقر</button>
+  </div>`}
+function reviewEv(){openModal(`<h3>📂 ملف الأدلة</h3><div class="revlist">${G.c.evidence.map(e=>`<div><b>${e.icon||TICON[e.type]||'📁'} ${esc(e.title)}</b> <span class="chip">${esc(e.type)}</span><p>${esc(e.text)}</p></div>`).join('')}</div>`)}
+
+/* ================= لوحة المعلمة ================= */
+function teacher(){openModal(`<h3>🔐 لوحة المعلمة</h3><p class="muted">أدخلي الرمز السري للدخول.</p>
+  <input class="inp mt" id="pin" type="password" inputmode="numeric" onkeydown="if(event.key==='Enter')chkPin()">
+  <button class="btn mt" onclick="chkPin()">دخول</button><p class="muted small mt">الرمز الافتراضي: ١٢٣٤ — غيّريه من الإعدادات.</p>`);setTimeout(()=>$('#pin')?.focus(),50)}
+function chkPin(){if(EN($('#pin').value.trim())===String(DB.settings.pin))tPanel('set');else toast('الرمز غير صحيح')}
+function tPanel(tab){
+  const cs=allCases(),T=[['set','الإعدادات'],['rec','سجل الطالبات'],['add','إضافة قضية']];
+  let h=`<h3>👩‍🏫 لوحة المعلمة</h3><div class="tabs">${T.map(t=>`<button class="${t[0]===tab?'on':''}" onclick="tPanel('${t[0]}')">${t[1]}</button>`).join('')}</div>`;
+  if(tab==='set'){
+    h+=`<label class="f">قضية الأسبوع <small>(تُفتح لجميع الطالبات وتظهر في المقر)</small></label>
+    <select class="inp" id="sWeek">${cs.map(c=>`<option value="${c.id}" ${c.id===DB.settings.weekly?'selected':''}>${esc(c.code||'')} — ${esc(c.title)}</option>`).join('')}</select>
+    <label class="f">ربط القضية بالمنهج <small>(يظهر تحت قضية الأسبوع)</small></label><input class="inp" id="sNote" value="${esc(DB.settings.note||'')}">
+    <label class="f">مدة المؤقت بالدقائق</label><input class="inp" id="sMin" type="number" min="3" max="60" value="${DB.settings.minutes}">
+    <label class="f">الرمز السري الجديد <small>(اتركيه فارغًا إن لم تريدي تغييره)</small></label><input class="inp" id="sPin" inputmode="numeric">
+    <div class="row mt"><button class="btn" onclick="saveSet()">حفظ الإعدادات</button></div>
+    ${DB.custom.length?`<h3 class="mt">القضايا المضافة</h3><table><tr><th>القضية</th><th></th></tr>${DB.custom.map(c=>`<tr><td>${esc(c.title)}</td><td><button class="btn sm red" onclick="delCase('${c.id}')">حذف</button></td></tr>`).join('')}</table>`:''}
+    <div class="mt" style="border-top:1px solid rgba(42,33,25,.15);padding-top:12px"><button class="btn sm red" onclick="resetAll()">مسح سجل جميع الطالبات</button>
+    <p class="muted small">يُحفظ التقدم على هذا الجهاز فقط.</p></div>`}
+  if(tab==='rec'){const names=Object.keys(DB.students);
+    h+=names.length?`<table><tr><th>الطالبة</th><th>القضايا</th><th>النقاط</th><th>الرتبة</th><th>الأوسمة</th></tr>${names.map(n=>{const s=DB.students[n].solved,ids=cs.filter(c=>s[c.id]);
+      return `<tr><td><b>${esc(n)}</b></td><td>${AR(ids.length)}/${AR(cs.length)}</td><td>${AR(ids.reduce((a,c)=>a+s[c.id].score,0))}</td><td>${rankOf(ids.length)[1]}</td><td>${ids.map(c=>c.badge.icon).join(' ')||'—'}</td></tr>`}).join('')}</table>`
+      :`<p class="muted mt">لا توجد طالبات مسجّلات على هذا الجهاز بعد.</p>`}
+  if(tab==='add'){
+    h+=`<p class="muted small">أضيفي قضية الأسبوع المرتبطة بالمنهج. افصلي بين الأجزاء بالرمز | وضعي كل عنصر في سطر.</p>
+    <label class="f">عنوان القضية</label><input class="inp" id="fTitle">
+    <div class="row"><div style="flex:1"><label class="f">الفترة / التاريخ</label><input class="inp" id="fEra"></div><div style="flex:1"><label class="f">المستوى</label><select class="inp" id="fLevel"><option>مستوى سهل</option><option>مستوى متوسط</option><option>مستوى متقدم</option></select></div></div>
+    <label class="f">ملف القضية <small>(القصة التشويقية)</small></label><textarea class="inp" id="fBrief" rows="3"></textarea>
+    <label class="f">اللغز <small>(السؤال الكبير)</small></label><input class="inp" id="fQ">
+    <label class="f">الأدلة <small>النوع | العنوان | النص — الأنواع: شخصية، تاريخ، خريطة، صورة، وثيقة</small></label><textarea class="inp" id="fEv" rows="4" placeholder="شخصية | الإمام … | نص الدليل"></textarea>
+    <label class="f">الربط <small>المعلومة | ما يناسبها (٢ على الأقل)</small></label><textarea class="inp" id="fMatch" rows="3" placeholder="الدرعية | العاصمة"></textarea>
+    <label class="f">الأسئلة <small>السؤال | الإجابة الصحيحة | خطأ ١ | خطأ ٢ | تلميح (اختياري)</small></label><textarea class="inp" id="fQuiz" rows="3"></textarea>
+    <label class="f">الخط الزمني <small>التاريخ | الحدث — بالترتيب الصحيح من الأقدم (٣ على الأقل)</small></label><textarea class="inp" id="fTl" rows="4"></textarea>
+    <label class="f">الاستنتاج الصحيح</label><input class="inp" id="fC0">
+    <label class="f">استنتاجان خاطئان</label><input class="inp" id="fC1"><input class="inp mt" id="fC2">
+    <label class="f">ملخص القضية</label><textarea class="inp" id="fSum" rows="2"></textarea>
+    <div class="row"><div style="flex:2"><label class="f">اسم الوسام</label><input class="inp" id="fBName" placeholder="وسام …"></div><div style="flex:1"><label class="f">رمز الوسام</label><input class="inp" id="fBIcon" value="🎖️" maxlength="4"></div></div>
+    <button class="btn mt" onclick="addCase()">إضافة القضية</button>`}
+  openModal(h);
+}
+function saveSet(){DB.settings.weekly=$('#sWeek').value;DB.settings.note=$('#sNote').value.trim();
+  DB.settings.minutes=Math.min(60,Math.max(3,+EN($('#sMin').value)||10));const p=EN($('#sPin').value.trim());if(p)DB.settings.pin=p;
+  save();toast('✓ حُفظت الإعدادات');if(me)renderHQ()}
+function delCase(id){if(!confirm('حذف هذه القضية؟'))return;DB.custom=DB.custom.filter(c=>c.id!==id);if(DB.settings.weekly===id)DB.settings.weekly='c1';save();tPanel('set');if(me)renderHQ()}
+function resetAll(){if(!confirm('سيُحذف تقدم جميع الطالبات على هذا الجهاز. متأكدة؟'))return;DB.students={};save();toast('تم مسح السجل');if(me){student();renderHQ()}tPanel('set')}
+function addCase(){
+  const v=id=>$('#'+id).value.trim();
+  const L=id=>v(id).split('\n').map(l=>l.split('|').map(s=>s.trim())).filter(a=>a[0]);
+  const ev=L('fEv').map(a=>a.length>=3?{type:a[0],title:a[1],text:a.slice(2).join(' | ')}:{type:'وثيقة',title:a[0],text:a[1]||''});
+  const match=L('fMatch').filter(a=>a[1]).map(a=>[a[0],a[1]]);
+  const quiz=L('fQuiz').filter(a=>a.length>=4).map(a=>({q:a[0],opts:[a[1],a[2],a[3]],hint:a[4]||''}));
+  const tl=L('fTl').filter(a=>a[1]).map(a=>[a[0],a[1]]);
+  const con=[v('fC0'),v('fC1'),v('fC2')];
+  if(!v('fTitle')||!v('fBrief'))return toast('أكملي العنوان وملف القضية');
+  if(ev.length<2)return toast('أضيفي دليلين على الأقل');
+  if(match.length<2)return toast('أضيفي سطرين على الأقل في الربط');
+  if(!quiz.length)return toast('أضيفي سؤالًا واحدًا على الأقل بأربعة أجزاء');
+  if(tl.length<3)return toast('أضيفي ثلاثة أحداث على الأقل في الخط الزمني');
+  if(con.some(x=>!x))return toast('أكملي الاستنتاجات الثلاثة');
+  const n=allCases().length+1,id='u'+Date.now();
+  DB.custom.push({id,code:'القضية رقم '+AR(n),title:v('fTitle'),era:v('fEra')||'—',level:v('fLevel'),brief:v('fBrief'),question:v('fQ')||'اكتشفي حقيقة هذه القضية.',
+    evidence:ev,match,quiz,timeline:tl,conclusion:con,summary:v('fSum'),badge:{icon:v('fBIcon')||'🎖️',name:v('fBName')||'وسام المحققة'}});
+  if(confirm('أُضيفت القضية ✓ هل تريدين جعلها قضية الأسبوع؟'))DB.settings.weekly=id;
+  save();if(me)renderHQ();tPanel('set');
+}
+</script>
+</body>
+</html>
